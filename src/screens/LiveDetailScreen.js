@@ -21,10 +21,8 @@ export default function LiveDetailScreen({ navigation }) {
       <ScrollView showsVerticalScrollIndicator={false}>
         <LiveBanner
           channel={liveChannel}
+          videoMode
           onPressBack={() => navigation.goBack()}
-          onPressPlay={() =>
-            navigation.navigate("Placeholder", { title: liveChannel.programTitle })
-          }
         />
         <NowPlayingRow channel={liveChannel} />
 

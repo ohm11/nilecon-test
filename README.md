@@ -39,6 +39,12 @@ npx expo start
 
 จากนั้นสแกน QR ด้วยแอป Expo Go (iOS/Android) หรือกด `i` / `a` เพื่อเปิดใน simulator/emulator, หรือกด `w` เพื่อรันบนเว็บ
 
+## หน้า Live
+
+หน้า `LiveDetailScreen` (ตรงกับภาพหน้าจอแรก) ใช้ `expo-av` เล่นวิดีโอตัวอย่าง (mock up) แบบ inline จริง — แตะที่วิดีโอเพื่อ play/pause, มีปุ่ม mute/unmute มุมขวาล่าง และ label "ตัวอย่างวิดีโอ (mock up)" กำกับไว้ให้ชัดเจนว่าเป็นของทดสอบ ไม่ใช่สตรีมจริง สลับ URL วิดีโอได้ที่ `MOCK_VIDEO_SOURCE` ใน `src/components/LiveBanner.js`
+
+หน้า Home ยังคงเป็นภาพนิ่ง + ปุ่มเล่น (แตะแล้วพาไปหน้า Live) เพื่อลดโหลดวิดีโอซ้ำซ้อนตอนเลื่อนฟีด
+
 ## การเชื่อม API จริงในอนาคต
 
 แก้ที่ไฟล์เดียว: `src/data/mockData.js` — เปลี่ยนจาก mock array เป็นผลลัพธ์จาก fetch/axios โครงสร้าง component จะไม่ต้องแก้อะไรเพิ่ม
