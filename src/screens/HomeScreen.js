@@ -11,6 +11,7 @@ import SocialFooter from "../components/SocialFooter";
 
 import {
   liveChannel,
+  todaySchedule,
   top10,
   featuredVideos,
   latestReplays,
@@ -19,10 +20,14 @@ import {
   latestMusic,
   newsItems,
 } from "../data/mockData";
+import { getCurrentProgram } from "../utils/schedule";
+import useNow from "../utils/useNow";
 import { colors } from "../theme/colors";
 
 export default function HomeScreen({ navigation }) {
   const openPlaceholder = (title) => navigation.navigate("Placeholder", { title });
+  const now = useNow();
+  const currentProgram = getCurrentProgram(todaySchedule, now);
 
   return (
     <SafeAreaView style={styles.safeArea} edges={["top"]}>
@@ -32,7 +37,7 @@ export default function HomeScreen({ navigation }) {
           channel={liveChannel}
           onPressPlay={() => navigation.navigate("LiveDetail")}
         />
-        <NowPlayingRow channel={liveChannel} />
+        <NowPlayingRow program={currentProgram} />
         <ChannelPromoBanner onPressSchedule={() => navigation.navigate("ScheduleTab")} />
 
         <SectionHeader

@@ -3,15 +3,19 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { colors, spacing, radius } from "../theme/colors";
 
-export function NowPlayingRow({ channel }) {
+export function NowPlayingRow({ program }) {
   return (
     <View style={styles.nowPlayingWrap}>
-      <View style={styles.statusPill}>
+      <View style={[styles.statusPill, !program && styles.statusPillOff]}>
         <Text style={styles.statusDot}>•</Text>
-        <Text style={styles.statusText}>{channel.status}</Text>
+        <Text style={styles.statusText}>{program ? "กำลังรับชม" : "ไม่มีรายการออกอากาศขณะนี้"}</Text>
       </View>
-      <Text style={styles.programTitle}>{channel.programTitle}</Text>
-      <Text style={styles.timeText}>{channel.time}</Text>
+      {program ? (
+        <>
+          <Text style={styles.programTitle}>{program.title}</Text>
+          <Text style={styles.timeText}>{program.timeLabel}</Text>
+        </>
+      ) : null}
     </View>
   );
 }
@@ -47,6 +51,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.md,
     paddingVertical: 6,
     borderRadius: radius.sm,
+  },
+  statusPillOff: {
+    backgroundColor: colors.surfaceAlt,
   },
   statusDot: {
     color: colors.text,

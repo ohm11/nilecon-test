@@ -1,19 +1,23 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { colors, spacing, radius } from "../theme/colors";
+import { STATUS } from "../utils/schedule";
 
 export default function ScheduleRow({ item, onPress }) {
+  const isCurrent = item.status === STATUS.CURRENT;
+  const isPast = item.status === STATUS.PAST;
+
   return (
     <TouchableOpacity
       activeOpacity={0.8}
       onPress={onPress}
-      style={[styles.row, item.active && styles.rowActive]}
+      style={[styles.row, isCurrent && styles.rowActive, isPast && styles.rowPast]}
     >
-      <View style={[styles.pill, item.active ? styles.pillActive : styles.pillInactive]}>
-        <Text style={styles.pillText}>{item.status}</Text>
+      <View style={[styles.pill, isCurrent ? styles.pillActive : styles.pillInactive]}>
+        <Text style={styles.pillText}>{item.statusLabel}</Text>
       </View>
-      <Text style={styles.title}>{item.title}</Text>
-      <Text style={styles.time}>{item.time}</Text>
+      <Text style={[styles.title, isPast && styles.textPast]}>{item.title}</Text>
+      <Text style={[styles.time, isPast && styles.textPast]}>{item.timeLabel}</Text>
     </TouchableOpacity>
   );
 }
@@ -28,6 +32,9 @@ const styles = StyleSheet.create({
   },
   rowActive: {
     backgroundColor: colors.accentBlue,
+  },
+  rowPast: {
+    opacity: 0.5,
   },
   pill: {
     alignSelf: "flex-start",
@@ -55,5 +62,8 @@ const styles = StyleSheet.create({
   },
   time: {
     color: colors.textMuted,
+  },
+  textPast: {
+    color: colors.textFaint,
   },
 });

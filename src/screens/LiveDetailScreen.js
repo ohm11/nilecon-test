@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { ScrollView, Text, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -6,15 +6,16 @@ import LiveBanner from "../components/LiveBanner";
 import { NowPlayingRow } from "../components/ChannelInfo";
 import ScheduleRow from "../components/ScheduleRow";
 import { liveChannel, todaySchedule } from "../data/mockData";
+import { withLiveStatus, getCurrentProgram, formatThaiDate } from "../utils/schedule";
+import useNow from "../utils/useNow";
 import { colors, spacing } from "../theme/colors";
 
 export default function LiveDetailScreen({ navigation }) {
-  const today = new Date().toLocaleDateString("th-TH-u-ca-buddhist", {
-    weekday: "long",
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-  });
+  const now = useNow(); // ticks every minute, so on-air status never goes stale
+
+  const scheduleWithStatus = useMemo(() => withLiveStatus(todaySchedule, now), [now]);
+  const currentProgram = useMemo(() => getCurrentProgram(todaySchedule, now), [now]);
+  const dateLabel = useMemo(() => formatThaiDate(now), [now]);
 
   return (
     <SafeAreaView style={styles.safeArea} edges={["top"]}>
@@ -24,18 +25,16 @@ export default function LiveDetailScreen({ navigation }) {
           videoMode
           onPressBack={() => navigation.goBack()}
         />
-        <NowPlayingRow channel={liveChannel} />
+        <NowPlayingRow program={currentProgram} />
 
         <Text style={styles.sectionTitle}>รายการวันนี้</Text>
-        <Text style={styles.sectionDate}>วัน{today}</Text>
+        <Text style={styles.sectionDate}>{dateLabel}</Text>
 
-        {todaySchedule.map((item) => (
+        {scheduleWithStatus.map((item) => (
           <ScheduleRow
             key={item.id}
             item={item}
-            onPress={() =>
-              navigation.navigate("Placeholder", { title: item.title })
-            }
+            onPress={() => navigation.navigate("Placeholder", { title: item.title })}
           />
         ))}
       </ScrollView>

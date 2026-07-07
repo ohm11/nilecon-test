@@ -3,18 +3,17 @@
 
 export const liveChannel = {
   channelLabel: "Live : Workpoint 23",
-  programTitle: "จำอวดหน้าจอ",
-  status: "กำลังรับชม",
-  time: "เวลา -",
   image: "https://picsum.photos/seed/live-cover/800/450",
 };
 
+// Real start/end times — on-air status is computed live against the
+// device clock (see src/utils/schedule.js) instead of being hardcoded.
 export const todaySchedule = [
-  { id: "s1", status: "กำลังรับชม", title: "จำอวดหน้าจอ", time: "10:30 น. - 11:00 น.", active: true },
-  { id: "s2", status: "รายการถัดไป", title: "ARMCHAIR คุยเล่นเอาจริง", time: "11:00 น. - 11:50 น." },
-  { id: "s3", status: "รายการถัดไป", title: "SUPER100 อัจฉริยะเกินร้อย", time: "11:50 น. - 13:00 น." },
-  { id: "s4", status: "รายการถัดไป", title: "เคลียร์ชัดชัด", time: "13:00 น. - 13:45 น." },
-  { id: "s5", status: "รายการถัดไป", title: "เพชรตัดเพชร ลูกทุ่งรวมดาว", time: "18:00 น. - 20:00 น." },
+  { id: "s1", title: "จำอวดหน้าจอ", startTime: "10:30", endTime: "11:00" },
+  { id: "s2", title: "ARMCHAIR คุยเล่นเอาจริง", startTime: "11:00", endTime: "11:50" },
+  { id: "s3", title: "SUPER100 อัจฉริยะเกินร้อย", startTime: "11:50", endTime: "13:00" },
+  { id: "s4", title: "เคลียร์ชัดชัด", startTime: "13:00", endTime: "13:45" },
+  { id: "s5", title: "เพชรตัดเพชร ลูกทุ่งรวมดาว", startTime: "18:00", endTime: "20:00" },
 ];
 
 export const top10 = [

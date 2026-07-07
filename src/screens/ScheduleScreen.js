@@ -1,16 +1,21 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { ScrollView, Text, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ScheduleRow from "../components/ScheduleRow";
 import { todaySchedule } from "../data/mockData";
+import { withLiveStatus } from "../utils/schedule";
+import useNow from "../utils/useNow";
 import { colors, spacing } from "../theme/colors";
 
 export default function ScheduleScreen({ navigation }) {
+  const now = useNow();
+  const scheduleWithStatus = useMemo(() => withLiveStatus(todaySchedule, now), [now]);
+
   return (
     <SafeAreaView style={styles.container} edges={["top"]}>
       <Text style={styles.title}>ผังรายการวันนี้</Text>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.content}>
-        {todaySchedule.map((item) => (
+        {scheduleWithStatus.map((item) => (
           <ScheduleRow
             key={item.id}
             item={item}
